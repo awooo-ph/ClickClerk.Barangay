@@ -1,0 +1,108 @@
+﻿<Window x:Class="ClickClerk.Barangay.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClickClerk.Barangay"
+        mc:Ignorable="d"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        WindowStartupLocation="CenterScreen"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        xmlns:i="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:views="clr-namespace:ClickClerk.Barangay.Views"
+        xmlns:pages="clr-namespace:ClickClerk.Barangay.ViewModels.Pages"
+        xmlns:converters="clr-namespace:ClickClerk.Barangay.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="ClickClerk [Barangay]" MinHeight="450" MinWidth="800">
+  <Grid Background="{DynamicResource PrimaryHueDarkBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal" Margin="20">
+      <Image Source="/Resources/logo 77.png"
+                   Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"
+                   Height="40" Width="40"/>
+      <TextBlock Text="ClickClerk" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" 
+                 VerticalAlignment="Center"
+                 Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"/>
+    </StackPanel>
+   
+    <Grid Grid.Row="1">
+      <Grid.Effect>
+        <DropShadowEffect ShadowDepth="0" RenderingBias="Performance"
+                          BlurRadius="14" Opacity="0.4"/>
+      </Grid.Effect>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="47"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="47"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Polygon Points="7,0 7,7 0,7" Fill="{DynamicResource MaterialDesignPaper}"
+               VerticalAlignment="Stretch" Stretch="Fill" HorizontalAlignment="Stretch"/>
+      <Rectangle Grid.Column="1" Grid.Row="0" Fill="{DynamicResource MaterialDesignPaper}"/>
+      
+      <UniformGrid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
+                   Rows="1">
+
+          <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                       Cursor="Hand"
+                       IsChecked="{Binding Source={x:Static pages:People.Instance},Path=IsSelected}"
+                       Height="Auto">
+            <StackPanel Orientation="Horizontal" Margin="7"
+                        Opacity="{Binding RelativeSource={RelativeSource AncestorType=RadioButton},Path=IsMouseOver,Converter={x:Static converters:BooleanToOpacity.Instance},ConverterParameter={}0.7 1}">
+              <i:PackIconModern Kind="PeopleMultiple" Height="Auto" Width="Auto" Margin="0 4"/>
+              <TextBlock Text="  PEOPLE" VerticalAlignment="Center"/>
+            </StackPanel>
+          </RadioButton>
+           
+          <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                       Cursor="Hand"
+                       Height="Auto">
+            <StackPanel Orientation="Horizontal" Margin="7"
+                        Opacity="{Binding RelativeSource={RelativeSource AncestorType=RadioButton},Path=IsMouseOver,Converter={x:Static converters:BooleanToOpacity.Instance},ConverterParameter={}0.7 1}">
+            <i:PackIconMaterial Kind="Gavel" Height="Auto" Width="Auto" Margin="0 4"/>
+              <TextBlock Text="  CASE FILES" VerticalAlignment="Center"/>
+            </StackPanel>
+          </RadioButton>
+
+        <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                     Cursor="Hand"
+                     Height="Auto">
+          <StackPanel Orientation="Horizontal" Margin="7"
+                      Opacity="{Binding RelativeSource={RelativeSource AncestorType=RadioButton},Path=IsMouseOver,Converter={x:Static converters:BooleanToOpacity.Instance},ConverterParameter={}0.7 1}">
+            <i:PackIconMaterial Kind="Certificate" Height="Auto" Width="Auto" Margin="0 4"/>
+            <TextBlock Text="  CERTIFICATIONS" VerticalAlignment="Center"/>
+          </StackPanel>
+        </RadioButton>
+      </UniformGrid>
+
+      <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource MaterialDesignPaper}">
+        <views:People/>
+      </Grid>
+
+      <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
+                 Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="False"
+                 VerticalAlignment="Bottom"/>
+      <Rectangle Width="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
+                 Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                 IsHitTestVisible="False"
+                 HorizontalAlignment="Right"/>
+      <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
+                 Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="False"
+                 Grid.Row="1"
+                 Margin="0 0 0 47"
+                 VerticalAlignment="Bottom"/>
+    </Grid>
+  </Grid>
+</Window>
