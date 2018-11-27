@@ -17,11 +17,9 @@
     <DataGrid Grid.Column="1" CanUserReorderColumns="False" CanUserDeleteRows="False" 
               VerticalScrollBarVisibility="Visible"
               EnableRowVirtualization="True"
-              CanUserAddRows="True" AutoGenerateColumns="False" ItemsSource="{Binding Source={x:Static pages:People.Instance},Path=Items}"
-              >
-      <DataGrid.Resources>
-        
-      </DataGrid.Resources>
+              CanUserAddRows="False"
+              AutoGenerateColumns="False"
+              ItemsSource="{Binding Source={x:Static pages:People.Instance},Path=Items}">
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding Firstname,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Header="FIRSTNAME"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
@@ -76,5 +74,18 @@
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
       </DataGrid.Columns>
     </DataGrid>
-    </Grid>
+      <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
+                 Grid.Column="1" IsHitTestVisible="False"
+                 Grid.Row="0"
+                 Margin="0 0 0 47"
+                 VerticalAlignment="Bottom"/>
+
+    <Button Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+              Grid.Column="1" Margin="20"
+              VerticalAlignment="Bottom" HorizontalAlignment="Right">
+      <md:PackIcon Kind="Plus" Height="24" Width="24"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+    </Button>
+  </Grid>
 </UserControl>
