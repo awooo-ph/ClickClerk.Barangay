@@ -33,6 +33,10 @@
       <TextBlock Text="ClickClerk" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" 
                  VerticalAlignment="Center"
                  Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"/>
+      <TextBlock Text="  [BARANGAY POBLACION]"
+                 VerticalAlignment="Center"
+                 Opacity="0.7"
+                 Foreground="{StaticResource PrimaryHueMidForegroundBrush}"/>
     </StackPanel>
    
     <Grid Grid.Row="1">
@@ -87,6 +91,35 @@
         </RadioButton>
       </UniformGrid>
 
+      <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"
+            Margin="0 0 20 0"
+            VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle RadiusX="77" RadiusY="77" Fill="{DynamicResource PrimaryHueMidBrush}"
+                   HorizontalAlignment="Left"
+                   Width="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}"/>
+        <Rectangle Fill="{StaticResource PrimaryHueMidBrush}"
+                   Margin="15 0 -15 0"/>
+        <Border>
+        <TextBox Width="174" md:TextFieldAssist.NewSpecHighlightingEnabled="True"
+                 Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                 IsUndoEnabled="False"
+                 Margin="10 0 0 0" VerticalAlignment="Center" Height="Auto"
+                 md:TextFieldAssist.DecorationVisibility="Collapsed"
+                 md:TextFieldAssist.HasFilledTextField="False"/>
+        </Border>
+        <ToggleButton Style="{StaticResource MaterialDesignActionToggleButton}"
+                      x:Name="ToggleButton"
+                      Height="30"
+                      Width="30"
+                      Content="{md:PackIcon Magnify}"
+                      Grid.Column="1"
+                      md:ToggleButtonAssist.OnContent="{md:PackIcon MagnifyClose}"/>
+      </Grid>
+
       <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource MaterialDesignPaper}">
         <views:People/>
       </Grid>
@@ -99,7 +132,7 @@
                  IsHitTestVisible="False"
                  HorizontalAlignment="Right"/>
       <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
-                 Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="False"
+                 Grid.Column="0" IsHitTestVisible="False"
                  Grid.Row="1"
                  Margin="0 0 0 47"
                  VerticalAlignment="Bottom"/>
