@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClickClerk.Barangay.Tools;
 
 namespace ClickClerk.Barangay.ViewModels.Pages
 {
@@ -31,8 +32,40 @@ namespace ClickClerk.Barangay.ViewModels.Pages
                 if (value == _IsSelected) return;
                 _IsSelected = value;
                 OnPropertyChanged(nameof(IsSelected));
+                if (value)
+                {
+                    Messenger.Default.Broadcast(Messages.PageChanged,this);
+                }
             }
         }
+
+
+        private string _SearchKeyword;
+
+        public string SearchKeyword
+        {
+            get => _SearchKeyword;
+            set
+            {
+                if (value == _SearchKeyword) return;
+                _SearchKeyword = value;
+                OnPropertyChanged(nameof(SearchKeyword));
+            }
+        }
+
+        private bool _CanSearch;
+
+        public bool CanSearch
+        {
+            get => _CanSearch;
+            set
+            {
+                if (value == _CanSearch) return;
+                _CanSearch = value;
+                OnPropertyChanged(nameof(CanSearch));
+            }
+        }
+
 
     }
 }
