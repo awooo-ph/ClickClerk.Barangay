@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="ClickClerk.Barangay.Dialogs.NewTawo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClickClerk.Barangay.Dialogs"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:ClickClerk.Barangay.Models;assembly=ClickClerk.Barangay.Core"
+             mc:Ignorable="d" 
+             xmlns:me="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             MinWidth="555" d:DataContext="{d:DesignInstance local:NewTawo}">
+  <UserControl.Resources>
+
+  </UserControl.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <md:PackIcon Kind="AccountPlus" Height="33" Width="33" Margin="20"/>
+    <TextBlock Text="ADD NEW PERSON"
+                 VerticalAlignment="Center"
+                 Margin="0 0 47 0"
+                 Grid.Column="1"
+                 Grid.Row="0"
+                 Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
+
+    <!--<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
+                  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">-->
+
+    <me:Stepper Layout="Horizontal" Margin="10 0 10 10" x:Name="Stepper"
+                CancelNavigationCommand="{Binding Source={x:Static md:DialogHost.CloseDialogCommand}}"
+                ContinueNavigation="Stepper_OnContinueNavigation"
+                ActiveStepChanged="Stepper_OnActiveStepChanged"
+                Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+      <me:Stepper.Steps>
+        <model:Step Header="Primary Info">
+          <model:Step.Content>
+            <Grid VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <StackPanel Margin="20 0">
+                <TextBox Text="{Binding Data.Firstname, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="FIRSTNAME" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+                <TextBox Text="{Binding Data.Middlename, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="MIDDLE NAME" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 10"/>
+                <TextBox Text="{Binding Data.Lastname, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="LAST NAME" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+                <Grid Margin="0 10">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <DatePicker md:HintAssist.Hint="BIRTH DATE" md:HintAssist.IsFloating="True"
+                              DisplayDateEnd="{Binding Source={x:Static system:DateTime.Now},Mode=OneWay}"
+                            SelectedDate="{Binding Data.BirthDate}"
+                            VerticalAlignment="Bottom"
+                            Margin="0 10 10 10"/>
+                  <ComboBox Margin="10 10 0 10" ItemsSource="{StaticResource Sexes}"
+                          Grid.Column="1"
+                          md:HintAssist.Hint="SEX" md:HintAssist.IsFloating="True"
+                          VerticalAlignment="Bottom"
+                          SelectedItem="{Binding Data.Sex}"/>
+                </Grid>
+
+              </StackPanel>
+              <me:StepButtonBar Continue="_CONTINUE" Cancel="_CANCEL"
+                                Margin="7 0"
+                                IsContinueEnabled="{Binding Data.IsNameValid}"
+                                Grid.Row="1"/>
+            </Grid>
+          </model:Step.Content>
+        </model:Step>
+        <model:Step Header="Additional Details">
+          <model:Step.Content>
+            <Grid VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <StackPanel Margin="20 0 20 20">
+                <TextBox Text="{Binding Data.Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="ADDRESS" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+                <TextBox Text="{Binding Data.Language, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         md:HintAssist.Hint="LANGUAGE SPOKEN" md:HintAssist.IsFloating="True"
+                         md:TextFieldAssist.HasFilledTextField="True"
+                         md:TextFieldAssist.RippleOnFocusEnabled="True"
+                         Margin="0 10"/>
+                <TextBox Text="{Binding Data.ProfessionText, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         md:HintAssist.Hint="PROFESSION" md:HintAssist.IsFloating="True"
+                         md:TextFieldAssist.HasFilledTextField="True"
+                         md:TextFieldAssist.RippleOnFocusEnabled="True"
+                         Margin="0 0"/>
+                <Grid Margin="0 10">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <ComboBox ItemsSource="{Binding Source={x:Static models:Religion.All}}"
+                            SelectedItem="{Binding Data.Religion}"
+                            DisplayMemberPath="Fullname"
+                            md:HintAssist.Hint="RELIGION" md:HintAssist.IsFloating="True"
+                            md:TextFieldAssist.HasFilledTextField="True"
+                            md:TextFieldAssist.RippleOnFocusEnabled="True"
+                            Margin="0 0 10 0"/>
+                  <CheckBox Margin="10 0 0 0"
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            IsChecked="{Binding Data.IsEmployed}"
+                            Content="_EMPLOYED"/>
+                </Grid>
+              </StackPanel>
+              <me:StepButtonBar Continue="_CONTINUE" Cancel="_CANCEL" Back="_BACK"
+                                Margin="7 0" 
+                                Grid.Row="1"/>
+            </Grid>
+          </model:Step.Content>
+        </model:Step>
+        <model:Step Header="Education">
+          <model:Step.Content>
+            <Grid VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              
+              <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                        MinHeight="174"
+                        KeyboardNavigation.ControlTabNavigation="Local"
+                        ItemsSource="{Binding Education}">
+                <DataGrid.Columns>
+                  <DataGridComboBoxColumn ItemsSource="{Binding Source={x:Static models:School.All}}"
+                                          SelectedItemBinding="{Binding School}"
+                                          DisplayMemberPath="Acronym"
+                                          Header="SCHOOL"
+                                          EditingElementStyle="{StaticResource MaterialDesignDataGridComboBox}"/>
+                  <DataGridComboBoxColumn ItemsSource="{StaticResource EducationLevels}"
+                                          SelectedItemBinding="{Binding Level}"
+                                          Header="LEVEL"
+                                          EditingElementStyle="{StaticResource MaterialDesignDataGridComboBox}"/>
+                  <DataGridTextColumn Header="YEAR START" Binding="{Binding YearStart}"
+                                      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                  <DataGridTextColumn Header="YEAR END" Binding="{Binding YearEnd}"
+                                      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                  <DataGridTextColumn Header="REMARKS" Binding="{Binding Remarks}"
+                                      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                </DataGrid.Columns>
+              </DataGrid>
+
+              <me:StepButtonBar Continue="FINISH" Back="BACK" Cancel="CANCEL"
+                                Grid.Row="2"
+                                Margin="7 0" 
+                              IsContinueEnabled="{Binding Data.IsNameValid, Mode=OneWay}"/>
+            </Grid>
+          </model:Step.Content>
+        </model:Step>
+      </me:Stepper.Steps>
+    </me:Stepper>
+    <!--</ScrollViewer>-->
+  </Grid>
+</UserControl>
