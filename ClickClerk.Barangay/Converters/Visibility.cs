@@ -16,8 +16,8 @@ namespace ClickClerk.Barangay.Converters
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var invert = ((bool?) parameter)??false;
-            if (!(value is bool b))
+            var invert = bool.Parse(parameter?.ToString()??"False");
+            if ((value is bool b && b))
                 return invert ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
             return !invert ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
         }
