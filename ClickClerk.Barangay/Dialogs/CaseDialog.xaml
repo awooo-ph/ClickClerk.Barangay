@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="ClickClerk.Barangay.Dialogs.CaseDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClickClerk.Barangay.Dialogs"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             xmlns:me="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance local:CaseDialog}">
+    <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <md:PackIcon Kind="AccountPlus" Height="33" Width="33" Margin="20"/>
+    <TextBlock Text="ADD NEW PERSON"
+                 VerticalAlignment="Center"
+                 Margin="0 0 47 0"
+                 Grid.Column="1"
+                 Grid.Row="0"
+                 Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
+
+    <!--<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
+                  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">-->
+
+    <me:Stepper Layout="Horizontal" Margin="10 0 10 10" x:Name="Stepper"
+                CancelNavigationCommand="{Binding Source={x:Static md:DialogHost.CloseDialogCommand}}"
+                ContinueNavigation="Stepper_OnContinueNavigation"
+                ActiveStepChanged="Stepper_OnActiveStepChanged"
+                Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+      <me:Stepper.Steps>
+        <model:Step Header="Case Information">
+          <model:Step.Content>
+            <Grid VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <StackPanel Margin="20 0">
+                <TextBox Text="{Binding Data.CaseNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="CASE NUMBER" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+                <TextBox Text="{Binding Data.Case, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="DESCRIPTION" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 10"/>
+                <DatePicker md:HintAssist.Hint="DATE FILED" md:HintAssist.IsFloating="True"
+                            DisplayDateEnd="{Binding Source={x:Static system:DateTime.Now},Mode=OneWay}"
+                            SelectedDate="{Binding Data.DateFiled}"
+                            VerticalAlignment="Bottom"
+                            Margin="0"/>
+               
+              </StackPanel>
+              <me:StepButtonBar Continue="_CONTINUE" Cancel="_CANCEL"
+                                Margin="7 0"
+                                Grid.Row="1"/>
+            </Grid>
+          </model:Step.Content>
+        </model:Step>
+        <model:Step Header="People Involved">
+          <model:Step.Content>
+            <Grid VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <StackPanel Margin="20 0 20 20">
+                <TextBlock Text="COMPLAINANTS" FontWeight="Bold"/>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <ComboBox ItemsSource="{Binding Complainants}"
+                            IsSynchronizedWithCurrentItem="True"
+                            IsEditable="True"
+                            DisplayMemberPath="Fullname"
+                            Style="{StaticResource MaterialDesignComboBox}"/>
+                  <Button Content="{md:PackIcon Plus}"
+                          Grid.Column="1"
+                          Command="{Binding AddComplainantCommand}"/>
+                </Grid>
+                <ListBox ItemsSource="{Binding Data.Complainants}" DisplayMemberPath="Fullname"/>
+              </StackPanel>
+              <me:StepButtonBar Continue="_CONTINUE" Cancel="_CANCEL" Back="_BACK"
+                                Margin="7 0" 
+                                Grid.Row="1"/>
+            </Grid>
+          </model:Step.Content>
+        </model:Step>
+        
+      </me:Stepper.Steps>
+    </me:Stepper>
+  </Grid>
+</UserControl>
