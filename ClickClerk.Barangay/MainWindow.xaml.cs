@@ -26,5 +26,11 @@ namespace ClickClerk.Barangay
             InitializeComponent();
             Core.Context = SynchronizationContext.Current;
         }
+
+        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            SearchBox.Focus();
+            SearchBox.SelectAll();
+        }
     }
 }
