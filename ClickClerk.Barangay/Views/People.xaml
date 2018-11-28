@@ -8,19 +8,42 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:models="clr-namespace:ClickClerk.Barangay.Models;assembly=ClickClerk.Barangay.Core"
              mc:Ignorable="d" 
+             xmlns:cnv="clr-namespace:ClickClerk.Barangay.Converters"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="47"/>
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-    <DataGrid Grid.Column="1" CanUserReorderColumns="False" CanUserDeleteRows="False" 
+    <DataGrid Grid.Column="0" Grid.ColumnSpan="2"
+              CanUserReorderColumns="False" CanUserDeleteRows="False" 
               VerticalScrollBarVisibility="Visible"
               EnableRowVirtualization="True"
               CanUserAddRows="False"
+              SelectionMode="Single"
+              SelectionUnit="Cell"
+              FrozenColumnCount="4"
               AutoGenerateColumns="False"
               ItemsSource="{Binding Source={x:Static pages:People.Instance},Path=Items}">
+      <DataGrid.Resources>
+        <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
+          <Setter Property="Opacity" Value="{Binding IsDeceased,Converter={x:Static cnv:BooleanToOpacity.Instance},ConverterParameter=1 0.4}"/>
+        </Style>
+      </DataGrid.Resources>
       <DataGrid.Columns>
+        <DataGridTemplateColumn IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal" 
+                          Opacity="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow},Path=IsMouseOver,Converter={x:Static cnv:BooleanToOpacity.Instance},ConverterParameter=0.2 1}">
+                <Button Content="{md:PackIcon Kind=Delete}" Style="{StaticResource MaterialDesignToolButton}"
+                        Padding="0 0 7 0" Height="Auto" VerticalAlignment="Stretch"
+                        ToolTip="DELETE"
+                        md:RippleAssist.IsCentered="True" md:RippleAssist.Feedback="Red"/>
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTextColumn Binding="{Binding Firstname,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Header="FIRSTNAME"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
         <DataGridTextColumn Binding="{Binding Middlename,UpdateSourceTrigger=PropertyChanged}" Header="MIDDLE NAME"
@@ -57,21 +80,51 @@
             </x:Array>
           </DataGridComboBoxColumn.ItemsSource>
         </DataGridComboBoxColumn>
-        <DataGridTextColumn Binding="{Binding ReligionText,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
-                            Header="RELIGION"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+        <DataGridComboBoxColumn ItemsSource="{Binding Source={x:Static models:Religion.All}}"
+                                DisplayMemberPath="Fullname"
+                                SelectedItemBinding="{Binding Religion}"
+                                Header="RELIGION"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridComboBox}"/>
         <DataGridTextColumn Binding="{Binding Language,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
                             Header="LANGUAGE"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-        <DataGridTextColumn Binding="{Binding EducationSummary,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
-                            Header="EDUCATION"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+        <DataGridTemplateColumn Header="EDUCATION">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Grid>
+                <TextBlock Text="{Binding EducationText,Mode=OneWay}"
+                           VerticalAlignment="Center"/>
+                <Button Style="{StaticResource MaterialDesignToolButton}"
+                        Padding="0"
+                        Command="{Binding Source={x:Static pages:People.Instance},Path=EditEducationCommand}"
+                        CommandParameter="{Binding}"
+                        VerticalAlignment="Stretch"
+                        Height="Auto"/>
+              </Grid>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTextColumn Binding="{Binding ProfessionText,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
                             Header="PROFESSION"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
         <DataGridCheckBoxColumn Header="EMPLOYED" Binding="{Binding IsEmployed}"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+        <DataGridCheckBoxColumn Header="DECEASED" Binding="{Binding IsDeceased,UpdateSourceTrigger=PropertyChanged}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+        <DataGridTemplateColumn Header="DATE OF DEATH">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding DeathDate,StringFormat=d}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+          <DataGridTemplateColumn.CellEditingTemplate>
+            <DataTemplate>
+              <DatePicker SelectedDate="{Binding DeathDate,UpdateSourceTrigger=PropertyChanged}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellEditingTemplate>
+        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
       <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
@@ -82,6 +135,7 @@
 
     <Button Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
               Grid.Column="1" Margin="20"
+            Command="{Binding AddCommand,Source={x:Static pages:People.Instance}}"
               VerticalAlignment="Bottom" HorizontalAlignment="Right">
       <md:PackIcon Kind="Plus" Height="24" Width="24"
                    VerticalAlignment="Center"
