@@ -39,6 +39,8 @@
                 <Button Content="{md:PackIcon Kind=Delete}" Style="{StaticResource MaterialDesignToolButton}"
                         Padding="0 0 7 0" Height="Auto" VerticalAlignment="Stretch"
                         ToolTip="DELETE"
+                        Command="{Binding Source={x:Static pages:People.Instance},Path=DeleteCommand}"
+                        CommandParameter="{Binding}"
                         md:RippleAssist.IsCentered="True" md:RippleAssist.Feedback="Red"/>
               </StackPanel>
             </DataTemplate>
