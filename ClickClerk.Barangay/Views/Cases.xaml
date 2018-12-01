@@ -35,6 +35,8 @@
                 <Button Content="{md:PackIcon Kind=Delete}" Style="{StaticResource MaterialDesignToolButton}"
                         Padding="0 0 7 0" Height="Auto" VerticalAlignment="Stretch"
                         ToolTip="DELETE"
+                        Command="{Binding Source={x:Static pages:Cases.Instance},Path=DeleteCommand}"
+                        CommandParameter="{Binding}"
                         md:RippleAssist.IsCentered="True" md:RippleAssist.Feedback="Red"/>
               </StackPanel>
             </DataTemplate>
@@ -60,20 +62,16 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellEditingTemplate>
         </DataGridTemplateColumn>
-        <DataGridTextColumn Binding="{Binding Complainants,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+        <DataGridTextColumn Binding="{Binding ComplainantsText,Mode=OneWay}"
+                            IsReadOnly="True"
                             Header="COMPLAINANT"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
         <DataGridTemplateColumn Header="RESPONDENT">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding BirthDate,StringFormat=d}"/>
+              <TextBlock Text="{Binding RespondentsText,Mode=OneWay}"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
-          <DataGridTemplateColumn.CellEditingTemplate>
-            <DataTemplate>
-              <DatePicker SelectedDate="{Binding BirthDate}"/>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellEditingTemplate>
         </DataGridTemplateColumn>
         <DataGridTextColumn Binding="{Binding ActionsTaken}"
                             Header="ACTIONS TAKEN"
