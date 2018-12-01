@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="ClickClerk.Barangay.Dialogs.TawoFinder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClickClerk.Barangay.Dialogs"
+             mc:Ignorable="d" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:converters="clr-namespace:ClickClerk.Barangay.Converters"
+             xmlns:me="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+             xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:models="clr-namespace:ClickClerk.Barangay.Models;assembly=ClickClerk.Barangay.Core"
+             d:DesignHeight="450" Width="555" d:DataContext="{d:DesignInstance local:TawoFinder}">
+    <Grid x:Name="Grid">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <md:PackIcon Kind="AccountSearch" Height="47" Width="47" Margin="20"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   x:FieldModifier="private" x:Name="Icon"/>
+      <TextBlock Text="SELECT PERSON"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 Margin="0 0 47 0"
+                 Grid.Column="1"
+                 Grid.Row="0"
+                 Style="{DynamicResource MaterialDesignHeadlineTextBlock}"/>
+
+    <UniformGrid Rows="1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+      <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Content="SEARCH"
+                   IsChecked="{Binding UseSearch}"/>
+      <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Content="ADD NEW"/>
+    </UniformGrid>
+
+    <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="222"
+          Visibility="{Binding UseSearch,Converter={x:Static converters:BooleanToVisibility.Instance},ConverterParameter=True}">
+      <StackPanel Margin="20">
+        <ComboBox IsEditable="True" Text="{Binding Position,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedIndex="0"
+                  md:HintAssist.Hint="RELATION"
+                  md:HintAssist.IsFloating="True"
+                  Margin="0 0 0 10">
+          <system:String>PARENT</system:String>
+          <system:String>CHILD</system:String>
+          <system:String>GRANDPARENT</system:String>
+          <system:String>GRANDCHILD</system:String>
+        </ComboBox>
+        <TextBox Text="{Binding NewTawo.Firstname, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="FIRSTNAME" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+        <TextBox Text="{Binding NewTawo.Middlename, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="MIDDLE NAME" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 10"/>
+        <TextBox Text="{Binding NewTawo.Lastname, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="LAST NAME" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+        <Grid Margin="0 10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <DatePicker md:HintAssist.Hint="BIRTH DATE" md:HintAssist.IsFloating="True"
+                              DisplayDateEnd="{Binding Source={x:Static system:DateTime.Now},Mode=OneWay}"
+                            SelectedDate="{Binding NewTawo.BirthDate}"
+                            VerticalAlignment="Bottom"
+                            Margin="0 10 10 10"/>
+          <ComboBox Margin="10 10 0 10" ItemsSource="{StaticResource Sexes}"
+                          Grid.Column="1"
+                          md:HintAssist.Hint="SEX" md:HintAssist.IsFloating="True"
+                          VerticalAlignment="Bottom"
+                          SelectedItem="{Binding NewTawo.Sex}"/>
+        </Grid>
+
+        <TextBox Text="{Binding NewTawo.Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                       md:HintAssist.Hint="ADDRESS" md:HintAssist.IsFloating="True"
+                       md:TextFieldAssist.HasFilledTextField="True"
+                       md:TextFieldAssist.RippleOnFocusEnabled="True"
+                       Margin="0 0"/>
+        <TextBox Text="{Binding NewTawo.Language, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         md:HintAssist.Hint="LANGUAGE SPOKEN" md:HintAssist.IsFloating="True"
+                         md:TextFieldAssist.HasFilledTextField="True"
+                         md:TextFieldAssist.RippleOnFocusEnabled="True"
+                         Margin="0 10"/>
+        <TextBox Text="{Binding NewTawo.ProfessionText, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         md:HintAssist.Hint="PROFESSION" md:HintAssist.IsFloating="True"
+                         md:TextFieldAssist.HasFilledTextField="True"
+                         md:TextFieldAssist.RippleOnFocusEnabled="True"
+                         Margin="0 0"/>
+        <Grid Margin="0 10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <ComboBox ItemsSource="{Binding Source={x:Static models:Religion.All}}"
+                            SelectedItem="{Binding NewTawo.Religion}"
+                            DisplayMemberPath="Fullname"
+                            md:HintAssist.Hint="RELIGION" md:HintAssist.IsFloating="True"
+                            md:TextFieldAssist.HasFilledTextField="True"
+                            md:TextFieldAssist.RippleOnFocusEnabled="True"
+                            Margin="0 0 10 0"/>
+          <CheckBox Margin="10 0 0 0"
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            IsChecked="{Binding NewTawo.IsEmployed}"
+                            Content="_EMPLOYED"/>
+        </Grid>
+        <TextBlock Text="HOUSEHOLD MEMBERS" FontWeight="Bold" Margin="0 20 0 0"/>
+        <DataGrid AutoGenerateColumns="False"
+                  KeyboardNavigation.ControlTabNavigation="Local"
+                  ItemsSource="{Binding Education}">
+          <DataGrid.Columns>
+            <DataGridComboBoxColumn ItemsSource="{Binding Source={x:Static models:School.All}}"
+                                    SelectedItemBinding="{Binding School}"
+                                    DisplayMemberPath="Acronym"
+                                    Header="SCHOOL"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridComboBox}"/>
+            <DataGridComboBoxColumn ItemsSource="{StaticResource EducationLevels}"
+                                    SelectedItemBinding="{Binding Level}"
+                                    Header="LEVEL"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridComboBox}"/>
+            <DataGridTextColumn Header="YEAR START" Binding="{Binding YearStart}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+            <DataGridTextColumn Header="YEAR END" Binding="{Binding YearEnd}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+            <DataGridTextColumn Header="REMARKS" Binding="{Binding Remarks}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+          </DataGrid.Columns>
+        </DataGrid>
+      </StackPanel>
+    </ScrollViewer>
+    
+    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+          Visibility="{Binding UseSearch,Converter={x:Static converters:BooleanToVisibility.Instance}}"
+          Margin="20 0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      
+      <TextBox Text="{Binding SearchKeyword,UpdateSourceTrigger=PropertyChanged}"
+               md:HintAssist.Hint="SEARCH KEYWORD"
+               md:HintAssist.IsFloating="True"
+               md:TextFieldAssist.RippleOnFocusEnabled="True"
+               md:TextFieldAssist.HasFilledTextField="True" Margin="0 20"/>
+      <ListBox Grid.Row="1" ItemsSource="{Binding People}" MaxHeight="147">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="22"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <md:PackIcon Kind="Check" Foreground="{StaticResource PrimaryHueDarkBrush}"
+                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"
+                           VerticalAlignment="Center"/>
+              <TextBlock Text="{Binding Fullname}" Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Margin="7 0 0 0"/>
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+      <ComboBox Grid.Row="2" IsEditable="True" Text="{Binding Position,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedIndex="0"
+                md:HintAssist.Hint="RELATION"
+                md:HintAssist.IsFloating="True"
+                Grid.Column="0" Margin="0 20">
+        <system:String>PARENT</system:String>
+        <system:String>CHILD</system:String>
+        <system:String>GRANDPARENT</system:String>
+        <system:String>GRANDCHILD</system:String>
+      </ComboBox>
+    </Grid>
+
+    
+
+      <UniformGrid Rows="1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                   Margin="20">
+        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                Content="_CANCEL"
+                Margin="0 0 10 0" IsCancel="True"
+                Command="{Binding Source={x:Static md:DialogHost.CloseDialogCommand}}">
+          <Button.CommandParameter>
+            <system:Boolean>False</system:Boolean>
+          </Button.CommandParameter>
+        </Button>
+        <Button Margin="10 0 0 0"
+                Content="_SELECT"
+                IsEnabled="{Binding HasSelected}"
+                IsDefault="True"
+                Command="{Binding Source={x:Static md:DialogHost.CloseDialogCommand}}">
+          <Button.CommandParameter>
+            <system:Boolean>True</system:Boolean>
+          </Button.CommandParameter>
+        </Button>
+      </UniformGrid>
+  </Grid>
+</UserControl>
