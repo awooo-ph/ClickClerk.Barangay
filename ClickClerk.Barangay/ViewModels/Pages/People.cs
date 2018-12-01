@@ -5,6 +5,7 @@ using System.Windows.Input;
 using ClickClerk.Barangay.Dialogs;
 using ClickClerk.Barangay.Models;
 using ClickClerk.Barangay.Tools;
+using MaterialDesignThemes.Wpf;
 
 namespace ClickClerk.Barangay.ViewModels.Pages
 {
@@ -54,6 +55,7 @@ namespace ClickClerk.Barangay.ViewModels.Pages
         {
             var res = await NewTawo.Show();
             if (res == null) return;
+            
             if (res.Data.Save() > 0)
             {
                 foreach (var education in res.Education)
@@ -62,6 +64,17 @@ namespace ClickClerk.Barangay.ViewModels.Pages
                     education.Save();
                     res.Data.Education.Add(education);
                 }
+            }
+        }));
+
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new DelegateCommand<Tawo>(async d =>
+        {
+            if (await MessageDialog.Show("Are you sure you want to delete this person?",
+                $"{d.Fullname} will be removed from the database. Click DELETE to confirm action.",
+                "DELETE", "CANCEL", PackIconKind.DeleteForever))
+            {
+               d.Delete();
             }
         }));
     }
