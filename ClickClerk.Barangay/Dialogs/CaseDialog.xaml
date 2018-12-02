@@ -20,8 +20,8 @@
       <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
-    <md:PackIcon Kind="AccountPlus" Height="33" Width="33" Margin="20"/>
-    <TextBlock Text="ADD NEW PERSON"
+    <md:PackIcon Kind="Gavel" Height="33" Width="33" Margin="20"/>
+    <TextBlock Text="ADD NEW CASE"
                  VerticalAlignment="Center"
                  Margin="0 0 47 0"
                  Grid.Column="1"
@@ -37,7 +37,7 @@
                 ActiveStepChanged="Stepper_OnActiveStepChanged"
                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
       <me:Stepper.Steps>
-        <model:Step Header="Case Information">
+        <model:Step Header="Case Details">
           <model:Step.Content>
             <Grid VerticalAlignment="Stretch">
               <Grid.RowDefinitions>
@@ -57,18 +57,19 @@
                        Margin="0 10"/>
                 <DatePicker md:HintAssist.Hint="DATE FILED" md:HintAssist.IsFloating="True"
                             DisplayDateEnd="{Binding Source={x:Static system:DateTime.Now},Mode=OneWay}"
-                            SelectedDate="{Binding Data.DateFiled}"
+                            SelectedDate="{Binding Data.DateFiled,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
                             VerticalAlignment="Bottom"
-                            Margin="0"/>
+                            Margin="0 20"/>
                
               </StackPanel>
               <me:StepButtonBar Continue="_CONTINUE" Cancel="_CANCEL"
                                 Margin="7 0"
+                                IsContinueEnabled="{Binding Data.IsCaseValid}"
                                 Grid.Row="1"/>
             </Grid>
           </model:Step.Content>
         </model:Step>
-        <model:Step Header="People Involved">
+        <model:Step Header="Complainants">
           <model:Step.Content>
             <Grid VerticalAlignment="Stretch">
               <Grid.RowDefinitions>
@@ -76,7 +77,6 @@
                 <RowDefinition Height="Auto"/>
               </Grid.RowDefinitions>
               <StackPanel Margin="20 0 20 20">
-                <TextBlock Text="COMPLAINANTS" FontWeight="Bold"/>
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -89,9 +89,11 @@
                             Style="{StaticResource MaterialDesignComboBox}"/>
                   <Button Content="{md:PackIcon Plus}"
                           Grid.Column="1"
+                          Margin="10 0 0 0"
                           Command="{Binding AddComplainantCommand}"/>
                 </Grid>
-                <ListBox ItemsSource="{Binding Data.Complainants}" DisplayMemberPath="Fullname"/>
+                <ListBox ItemsSource="{Binding Data.Complainants}" DisplayMemberPath="Fullname"
+                         Height="174"/>
               </StackPanel>
               <me:StepButtonBar Continue="_CONTINUE" Cancel="_CANCEL" Back="_BACK"
                                 Margin="7 0" 
@@ -99,7 +101,39 @@
             </Grid>
           </model:Step.Content>
         </model:Step>
-        
+        <model:Step Header="Respondents">
+          <model:Step.Content>
+            <Grid VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <StackPanel Margin="20 0 20 20">
+                
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <ComboBox ItemsSource="{Binding Respondents}"
+                            IsSynchronizedWithCurrentItem="True"
+                            IsEditable="True"
+                            DisplayMemberPath="Fullname"
+                            Style="{StaticResource MaterialDesignComboBox}"/>
+                  <Button Content="{md:PackIcon Plus}"
+                          Grid.Column="1"
+                          Margin="10 0 0 0"
+                          Command="{Binding AddRespondentCommand}"/>
+                </Grid>
+                <ListBox ItemsSource="{Binding Data.Respondents}" DisplayMemberPath="Fullname"
+                         Height="174"/>
+              </StackPanel>
+              <me:StepButtonBar Continue="_FINISH" Cancel="_CANCEL" Back="_BACK"
+                                Margin="7 0" 
+                                Grid.Row="1"/>
+            </Grid>
+          </model:Step.Content>
+        </model:Step>
       </me:Stepper.Steps>
     </me:Stepper>
   </Grid>
