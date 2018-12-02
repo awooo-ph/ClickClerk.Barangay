@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -72,6 +73,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Words.NET, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\ClickClerk.Barangay.Core\packages\DocX.1.2.1\lib\Xceed.Words.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -80,18 +84,28 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ConverterBase.cs" />
     <Compile Include="Converters\Opacity.cs" />
-    <Compile Include="Converters\Visibility.cs" />
+    <Compile Include="Converters\BooleanToVisibility.cs" />
     <Compile Include="Dialogs\CaseDialog.xaml.cs">
       <DependentUpon>CaseDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EducationDialog.xaml.cs">
       <DependentUpon>EducationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\HouseholdDialog.xaml.cs">
+      <DependentUpon>HouseholdDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\NewTawo.xaml.cs">
       <DependentUpon>NewTawo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\TawoFinder.xaml.cs">
+      <DependentUpon>TawoFinder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Pages\Cases.cs" />
+    <Compile Include="ViewModels\Pages\Households.cs" />
     <Compile Include="ViewModels\Pages\PageBase.cs" />
     <Compile Include="ViewModels\Pages\People.cs" />
     <Compile Include="ViewModels\Religions.cs" />
@@ -99,6 +113,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Cases.xaml.cs">
       <DependentUpon>Cases.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Households.xaml.cs">
+      <DependentUpon>Households.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\People.xaml.cs">
       <DependentUpon>People.xaml</DependentUpon>
@@ -117,7 +134,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\HouseholdDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\MessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\NewTawo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\TawoFinder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +163,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Cases.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Households.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,7 +220,9 @@
       <Name>MaterialDesignExtensions</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Templates\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\logo 77.png" />
   </ItemGroup>
