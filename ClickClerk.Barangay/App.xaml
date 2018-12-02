@@ -80,6 +80,35 @@
         <models:Sexes>Female</models:Sexes>
         <models:Sexes>Undefined</models:Sexes>
       </x:Array>
+
+      <x:Array Type="{x:Type models:ShelterKinds}" x:Key="ShelterKinds">
+        <models:ShelterKinds>Permanent</models:ShelterKinds>
+        <models:ShelterKinds>SemiPermanent</models:ShelterKinds>
+        <models:ShelterKinds>Temporary</models:ShelterKinds>
+      </x:Array>
+
+      <x:Array Type="{x:Type models:WaterSources}" x:Key="WaterSources">
+        <models:WaterSources>Pipe</models:WaterSources>
+        <models:WaterSources>DeepWell</models:WaterSources>
+        <models:WaterSources>OpenWell</models:WaterSources>
+        <models:WaterSources>Rain</models:WaterSources>
+        <models:WaterSources>Surfaces</models:WaterSources>
+        <models:WaterSources>Others</models:WaterSources>
+      </x:Array>
+
+      <x:Array Type="{x:Type models:LightSources}" x:Key="LightSources">
+        <models:LightSources>Electricity</models:LightSources>
+        <models:LightSources>Kerosene</models:LightSources>
+        <models:LightSources>Solar</models:LightSources>
+        <models:LightSources>Others</models:LightSources>
+      </x:Array>
+
+      <x:Array Type="{x:Type models:ToiletTypes}" x:Key="ToiletTypes">
+        <models:ToiletTypes>Modern</models:ToiletTypes>
+        <models:ToiletTypes>WaterSealed</models:ToiletTypes>
+        <models:ToiletTypes>Pit</models:ToiletTypes>
+        <models:ToiletTypes>None</models:ToiletTypes>
+      </x:Array>
     </ResourceDictionary>
   </Application.Resources>
 </Application>
