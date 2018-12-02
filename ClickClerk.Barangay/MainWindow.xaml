@@ -20,8 +20,7 @@
         xmlns:viewModels="clr-namespace:ClickClerk.Barangay.ViewModels"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-
-        Title="ClickClerk [Barangay]" MinHeight="450" MinWidth="800">
+        Title="ClickClerk [Barangay]" MinHeight="444" MinWidth="777">
   <md:DialogHost Identifier="ExternalDialog" PopupStyle="{StaticResource MaterialDesignDialogHostPopup}">
   <md:DialogHost Identifier="InternalDialog" CloseOnClickAway="True">
     <md:DrawerHost RightDrawerContent="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=RightDrawer}"
@@ -35,7 +34,7 @@
             <views:Schools/>
           </DataTemplate>
     </md:DrawerHost.Resources>
-    <Grid Background="{DynamicResource PrimaryHueDarkBrush}">
+    <Grid Background="{DynamicResource PrimaryHueMidBrush}">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
@@ -57,7 +56,7 @@
     <!--SEARCH BOX-->
     <Grid Margin="0 0 20 0"
           HorizontalAlignment="Right"
-            Visibility="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=CurrentScreen.CanSearch,Converter={x:Static converters:Visibility.Instance}}"
+            Visibility="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=CurrentScreen.CanSearch,Converter={x:Static converters:BooleanToVisibility.Instance}}"
             VerticalAlignment="Center">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
@@ -143,11 +142,9 @@
       <Polygon Points="7,0 7,7 0,7" Fill="{DynamicResource MaterialDesignPaper}"
                VerticalAlignment="Stretch" Stretch="Fill" HorizontalAlignment="Stretch"/>
       <Rectangle Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Fill="{DynamicResource MaterialDesignPaper}"/>
-      
-      <UniformGrid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
-                   Rows="1">
 
-          <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
+              <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                        Cursor="Hand"
                        IsChecked="{Binding Source={x:Static pages:People.Instance},Path=IsSelected,Mode=TwoWay}"
                        Height="Auto">
@@ -157,8 +154,19 @@
               <TextBlock Text="  PEOPLE" VerticalAlignment="Center"/>
             </StackPanel>
           </RadioButton>
-           
-          <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+
+        <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                     Cursor="Hand"
+                     IsChecked="{Binding Source={x:Static pages:Households.Instance},Path=IsSelected,Mode=TwoWay}"
+                     Height="Auto">
+          <StackPanel Orientation="Horizontal" Margin="7"
+                      Opacity="{Binding RelativeSource={RelativeSource AncestorType=RadioButton},Path=IsMouseOver,Converter={x:Static converters:BooleanToOpacity.Instance},ConverterParameter={}0.7 1}">
+            <i:PackIconModern Kind="HomePeople" Height="Auto" Width="Auto" Margin="0 4"/>
+            <TextBlock Text="  HOUSEHOLDS" VerticalAlignment="Center"/>
+          </StackPanel>
+        </RadioButton>
+
+              <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                        Cursor="Hand"
                        IsChecked="{Binding Source={x:Static pages:Cases.Instance},Path=IsSelected,Mode=TwoWay}"
                        Height="Auto">
@@ -178,9 +186,9 @@
             <TextBlock Text="  CERTIFICATIONS" VerticalAlignment="Center"/>
           </StackPanel>
         </RadioButton>
-      </UniformGrid>
-
-      <StackPanel Orientation="Horizontal"
+      </StackPanel>
+      
+            <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Right"
                   Grid.Row="0" Grid.Column="2">
       
@@ -205,10 +213,12 @@
 
       <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource MaterialDesignPaper}">
         <views:People DataContext="{Binding Source={x:Static pages:People.Instance}}"
-                      Visibility="{Binding IsSelected,Converter={x:Static converters:Visibility.Instance}}"/>
+                      Visibility="{Binding IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"/>
         <views:Cases DataContext="{Binding Source={x:Static pages:Cases.Instance}}"
-                      Visibility="{Binding IsSelected,Converter={x:Static converters:Visibility.Instance}}"/>
-      </Grid>
+                      Visibility="{Binding IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"/>
+        <views:Households DataContext="{Binding Source={x:Static pages:Households.Instance}}"
+                     Visibility="{Binding IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"/>
+            </Grid>
 
       <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
                  Grid.Column="0" Grid.ColumnSpan="3" IsHitTestVisible="False"
