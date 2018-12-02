@@ -72,6 +72,7 @@ namespace ClickClerk.Barangay.Dialogs
             var dlg = new NewTawo();
             var res = await DialogHost.Show(dlg, "ExternalDialog");
             if (res == null) return null;
+            if (!(res is bool b && b)) return null;
             return dlg;
         }
 
