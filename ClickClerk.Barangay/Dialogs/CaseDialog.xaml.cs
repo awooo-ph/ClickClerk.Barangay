@@ -30,7 +30,7 @@ namespace ClickClerk.Barangay.Dialogs
         public CaseDialog()
         {
             InitializeComponent();
-            Data = new CaseFile();
+            Data = new CaseFile(){DateFiled = DateTime.Now};
             DataContext = this;
         }
 
@@ -58,9 +58,26 @@ namespace ClickClerk.Barangay.Dialogs
                 _complainants.Filter = o =>
                 {
                     if (!(o is Tawo t)) return false;
-                    return !Data.Complainants.Contains(t);
+                    return !Data.Complainants.Contains(t) && !Data.Respondents.Contains(t);
                 };
                 return _complainants;
+            }
+        }
+
+        private ListCollectionView _Respondents;
+
+        public ListCollectionView Respondents
+        {
+            get
+            {
+                if (_Respondents != null) return _Respondents;
+                _Respondents = new ListCollectionView(Tawo.Cache);
+                _Respondents.Filter = o =>
+                {
+                    if (!(o is Tawo t)) return false;
+                    return !Data.Respondents.Contains(t) && !Data.Complainants.Contains(t);
+                };
+                return _Respondents;
             }
         }
 
@@ -69,7 +86,9 @@ namespace ClickClerk.Barangay.Dialogs
             var dlg = new CaseDialog();
             var res = await DialogHost.Show(dlg, "ExternalDialog");
             if (res == null) return null;
-            return dlg;
+            if(res is bool b && b)
+                return dlg;
+            return null;
         }
 
         private ICommand _addComplainantCommand;
@@ -81,7 +100,20 @@ namespace ClickClerk.Barangay.Dialogs
                     if (Complainants.CurrentItem == null) return;
                     Data.Complainants.Add(Complainants.CurrentItem as Tawo);
                     Complainants.Refresh();
+                    Respondents.Refresh();
                 },d=> Complainants.CurrentItem!=null));
+
+        private ICommand _addRespondentCommand;
+
+        public ICommand AddRespondentCommand =>
+            _addRespondentCommand ?? (_addRespondentCommand = new DelegateCommand(
+                d =>
+                {
+                    if (Respondents.CurrentItem == null) return;
+                    Data.Respondents.Add(Respondents.CurrentItem as Tawo);
+                    Complainants.Refresh();
+                    Respondents.Refresh();
+                },d=> Respondents.CurrentItem!=null));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
