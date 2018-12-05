@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using ClickClerk.Barangay.Dialogs;
 using ClickClerk.Barangay.Models;
 using ClickClerk.Barangay.Tools;
 using MaterialDesignThemes.Wpf;
+using Xceed.Words.NET;
 
 namespace ClickClerk.Barangay.ViewModels.Pages
 {
