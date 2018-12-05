@@ -179,6 +179,7 @@
 
         <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                      Cursor="Hand"
+                     IsChecked="{Binding Source={x:Static pages:Certificates.Instance},Path=IsSelected,Mode=TwoWay}"
                      Height="Auto">
           <StackPanel Orientation="Horizontal" Margin="7"
                       Opacity="{Binding RelativeSource={RelativeSource AncestorType=RadioButton},Path=IsMouseOver,Converter={x:Static converters:BooleanToOpacity.Instance},ConverterParameter={}0.7 1}">
@@ -218,6 +219,8 @@
                       Visibility="{Binding IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"/>
         <views:Households DataContext="{Binding Source={x:Static pages:Households.Instance}}"
                      Visibility="{Binding IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"/>
+        <views:Certificates DataContext="{Binding Source={x:Static pages:Certificates.Instance}}"
+                          Visibility="{Binding IsSelected,Converter={x:Static converters:BooleanToVisibility.Instance}}"/>
             </Grid>
 
       <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
