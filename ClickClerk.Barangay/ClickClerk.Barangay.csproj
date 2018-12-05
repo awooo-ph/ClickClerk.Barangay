@@ -88,6 +88,9 @@
     <Compile Include="Dialogs\CaseDialog.xaml.cs">
       <DependentUpon>CaseDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\CertificationDialog.xaml.cs">
+      <DependentUpon>CertificationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\EducationDialog.xaml.cs">
       <DependentUpon>EducationDialog.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,7 @@
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Pages\Cases.cs" />
+    <Compile Include="ViewModels\Pages\Certificates.cs" />
     <Compile Include="ViewModels\Pages\Households.cs" />
     <Compile Include="ViewModels\Pages\PageBase.cs" />
     <Compile Include="ViewModels\Pages\People.cs" />
@@ -113,6 +117,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Cases.xaml.cs">
       <DependentUpon>Cases.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Certificates.xaml.cs">
+      <DependentUpon>Certificates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Households.xaml.cs">
       <DependentUpon>Households.xaml</DependentUpon>
@@ -127,6 +134,10 @@
       <DependentUpon>Schools.xaml</DependentUpon>
     </Compile>
     <Page Include="Dialogs\CaseDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\CertificationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Certificates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Households.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,6 +216,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Templates\SSS.docx" />
+    <None Include="Templates\SoloParent.docx" />
+    <None Include="Templates\Residence.docx" />
+    <None Include="Templates\PWD.docx" />
+    <None Include="Templates\DeathCertificate.docx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -220,9 +240,7 @@
       <Name>MaterialDesignExtensions</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Templates\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\logo 77.png" />
   </ItemGroup>
