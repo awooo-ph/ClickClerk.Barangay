@@ -147,6 +147,21 @@ namespace ClickClerk.Barangay.Dialogs
             }
         }
 
+        private Visibility _relationVisibility = Visibility.Visible;
+
+        public Visibility RelationVisibility
+        {
+            get => _relationVisibility;
+            set
+            {
+                if (value == _relationVisibility) return;
+                _relationVisibility = value;
+                OnPropertyChanged(nameof(RelationVisibility));
+            }
+        }
+
+
+
         private ObservableCollection<Education> _Education;
 
         public ObservableCollection<Education> Education
@@ -162,9 +177,9 @@ namespace ClickClerk.Barangay.Dialogs
         
         public Predicate<object> Filter { get; set; }
 
-        public static async Task<TawoFinder> Show(Predicate<object> filter = null)
+        public static async Task<TawoFinder> Show(Predicate<object> filter)
         {
-            var dlg = new TawoFinder()
+            var dlg = new TawoFinder
             {
                 Filter = filter
             };
@@ -174,5 +189,16 @@ namespace ClickClerk.Barangay.Dialogs
             return dlg;
         }
 
+        public static async Task<Tawo> Show()
+        {
+            var dlg = new TawoFinder();
+            dlg.RelationVisibility = Visibility.Collapsed;
+            var res = await DialogHost.Show(dlg, "InternalDialog");
+            if (res == null) return null;
+            if (!(res is bool b && b)) return null;
+            if (dlg.UseSearch)
+                return dlg.People.CurrentItem as Tawo;
+            return dlg.NewTawo;
+        }
     }
 }
