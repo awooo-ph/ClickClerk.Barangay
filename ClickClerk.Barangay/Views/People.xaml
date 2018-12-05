@@ -21,13 +21,24 @@
               EnableRowVirtualization="True"
               CanUserAddRows="False"
               SelectionMode="Single"
-              SelectionUnit="Cell"
               FrozenColumnCount="4"
               AutoGenerateColumns="False"
               ItemsSource="{Binding Source={x:Static pages:People.Instance},Path=Items}">
       <DataGrid.Resources>
         <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
           <Setter Property="Opacity" Value="{Binding IsDeceased,Converter={x:Static cnv:BooleanToOpacity.Instance},ConverterParameter=1 0.4}"/>
+          <Setter Property="ContextMenu">
+            <Setter.Value>
+              <ContextMenu>
+                <MenuItem Header="Edit E_ducation"
+                          Command="{Binding Source={x:Static pages:People.Instance},Path=EditEducationCommand}"
+                          CommandParameter="{Binding}"/>
+                <MenuItem Header="View _Household"/>
+                <MenuItem Header="_Delete" Command="{Binding Source={x:Static pages:People.Instance},Path=DeleteCommand}"
+                          CommandParameter="{Binding}"/>
+              </ContextMenu>
+            </Setter.Value>
+          </Setter>
         </Style>
       </DataGrid.Resources>
       <DataGrid.Columns>
@@ -58,12 +69,12 @@
         <DataGridTemplateColumn Header="BIRTH DATE">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding BirthDate,StringFormat=d}"/>
+              <TextBlock Text="{Binding BirthDate,Mode=OneWay,StringFormat=d}"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
           <DataGridTemplateColumn.CellEditingTemplate>
             <DataTemplate>
-              <DatePicker SelectedDate="{Binding BirthDate}"/>
+              <DatePicker SelectedDate="{Binding BirthDate,Mode=TwoWay}"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellEditingTemplate>
         </DataGridTemplateColumn>
@@ -106,12 +117,36 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
-        <DataGridTextColumn Binding="{Binding ProfessionText,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
-                            Header="PROFESSION"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+        <DataGridCheckBoxColumn Header="PWD" Binding="{Binding HasDisability}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+        <DataGridCheckBoxColumn Header="SOLO PARENT" Binding="{Binding IsSoloParent}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
         <DataGridCheckBoxColumn Header="EMPLOYED" Binding="{Binding IsEmployed}"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+        <DataGridTextColumn Binding="{Binding ProfessionText,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                            Header="PROFESSION"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+        
+        <DataGridTemplateColumn Header="EMPLOYMENT STARTED">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding IncomeStart,Mode=OneWay,StringFormat=d}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+          <DataGridTemplateColumn.CellEditingTemplate>
+            <DataTemplate>
+              <DatePicker SelectedDate="{Binding IncomeStart,Mode=TwoWay}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellEditingTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Binding="{Binding IncomeMonthly,StringFormat={}#\,##0.00,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                            Header="MONTHLY INCOME"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+        
+
         <DataGridCheckBoxColumn Header="DECEASED" Binding="{Binding IsDeceased,UpdateSourceTrigger=PropertyChanged}"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
