@@ -47,6 +47,7 @@
       <StackPanel Margin="20">
         <ComboBox IsEditable="True" Text="{Binding Position,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedIndex="0"
                   md:HintAssist.Hint="RELATION"
+                  Visibility="{Binding RelationVisibility}"
                   md:HintAssist.IsFloating="True"
                   Margin="0 0 0 10">
           <system:String>PARENT</system:String>
@@ -119,8 +120,10 @@
                             IsChecked="{Binding NewTawo.IsEmployed}"
                             Content="_EMPLOYED"/>
         </Grid>
-        <TextBlock Text="HOUSEHOLD MEMBERS" FontWeight="Bold" Margin="0 20 0 0"/>
+        <TextBlock Text="HOUSEHOLD MEMBERS" FontWeight="Bold" Margin="0 20 0 0"
+                   Visibility="{Binding RelationVisibility}"/>
         <DataGrid AutoGenerateColumns="False"
+                  Visibility="{Binding RelationVisibility}"
                   KeyboardNavigation.ControlTabNavigation="Local"
                   ItemsSource="{Binding Education}">
           <DataGrid.Columns>
@@ -179,6 +182,7 @@
 
       <ComboBox Grid.Row="2" IsEditable="True" Text="{Binding Position,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedIndex="0"
                 md:HintAssist.Hint="RELATION"
+                Visibility="{Binding RelationVisibility}"
                 md:HintAssist.IsFloating="True"
                 Grid.Column="0" Margin="0 20">
         <system:String>PARENT</system:String>
