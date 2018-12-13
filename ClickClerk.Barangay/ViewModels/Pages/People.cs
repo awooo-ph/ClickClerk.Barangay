@@ -29,8 +29,29 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             {
                 if (_items != null) return _items;
                 _items = new ListCollectionView(Tawo.Cache);
+                _items.LiveFilteringProperties.Add(nameof(Tawo.Fullname));
+                _items.IsLiveFiltering = true;
+                _items.Filter = FilterTawo;
                 return _items;
             }
+        }
+
+        private bool FilterTawo(object obj)
+        {
+            if (!(obj is Tawo t)) return false;
+            if (string.IsNullOrEmpty(SearchKeyword)) return true;
+            if (t.Fullname.ToLower().Contains(SearchKeyword.ToLower())) return true;
+
+            return false;
+        }
+
+        protected override void OnSearch()
+        {
+            //foreach (Tawo item in Items)
+            //{
+                //item.Refresh(nameof(item.Fullname));
+            //}
+            Items.Refresh();
         }
 
         private ICommand _editEducationCommand;
