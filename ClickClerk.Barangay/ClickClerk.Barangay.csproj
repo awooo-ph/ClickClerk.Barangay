@@ -106,6 +106,7 @@
     <Compile Include="Dialogs\TawoFinder.xaml.cs">
       <DependentUpon>TawoFinder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Pages\Cases.cs" />
     <Compile Include="ViewModels\Pages\Certificates.cs" />
@@ -240,7 +241,9 @@
       <Name>MaterialDesignExtensions</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SplashScreen Include="SplashScreen.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\logo 77.png" />
   </ItemGroup>

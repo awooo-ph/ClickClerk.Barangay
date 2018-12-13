@@ -29,11 +29,7 @@
                  Grid.Row="0"
                  Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
 
-    <TextBlock Grid.Row="1"
-               Grid.Column="0"
-               Grid.ColumnSpan="2">
-      <Run Text="NAME: "/><Run Text="{Binding Data.Tawo.Fullname,Mode=OneTime}"/>
-    </TextBlock>
+   
     <!--<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                   Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">-->
 

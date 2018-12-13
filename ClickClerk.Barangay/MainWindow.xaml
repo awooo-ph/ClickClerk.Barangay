@@ -75,7 +75,7 @@
           <TextBox md:TextFieldAssist.NewSpecHighlightingEnabled="True"
                    Foreground="{StaticResource PrimaryHueLightForegroundBrush}"
                    IsUndoEnabled="False"
-                   Text="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=CurrentScreen.SearchKeyword}"
+                   Text="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=CurrentScreen.SearchKeyword,UpdateSourceTrigger=PropertyChanged}"
                    md:HintAssist.Hint="SEARCH..." md:HintAssist.IsFloating="False"
                    Margin="7 0 15 0" VerticalAlignment="Center" Height="Auto"
                    md:TextFieldAssist.DecorationVisibility="Collapsed"

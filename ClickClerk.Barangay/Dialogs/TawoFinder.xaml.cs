@@ -4,21 +4,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ClickClerk.Barangay.Models;
 using ClickClerk.Barangay.Tools;
 using JetBrains.Annotations;
-using MaterialDesignExtensions.Controls;
 using MaterialDesignThemes.Wpf;
 
 namespace ClickClerk.Barangay.Dialogs
@@ -26,7 +17,7 @@ namespace ClickClerk.Barangay.Dialogs
     /// <summary>
     /// Interaction logic for TawoFinder.xaml
     /// </summary>
-    public partial class TawoFinder : UserControl,INotifyPropertyChanged
+    public partial class TawoFinder : INotifyPropertyChanged
     {
         private TawoFinder()
         {
@@ -53,13 +44,9 @@ namespace ClickClerk.Barangay.Dialogs
 
         public Tawo NewTawo
         {
-            get
-            {
-                return _NewTawo;
-            }
+            get => _NewTawo;
             set
             {
-                if (value == _NewTawo) return;
                 _NewTawo = value;
                 OnPropertyChanged(nameof(NewTawo));
             }

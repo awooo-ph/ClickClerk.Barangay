@@ -109,6 +109,15 @@
         <models:ToiletTypes>Pit</models:ToiletTypes>
         <models:ToiletTypes>None</models:ToiletTypes>
       </x:Array>
+
+      <x:Array Type="{x:Type models:CertificateTypes}" x:Key="CertificateTypes">
+        <models:CertificateTypes>GoodMoral</models:CertificateTypes>
+        <models:CertificateTypes>SoloParent</models:CertificateTypes>
+        <models:CertificateTypes>SSS</models:CertificateTypes>
+        <models:CertificateTypes>PWD</models:CertificateTypes>
+        <models:CertificateTypes>Death</models:CertificateTypes>
+        <models:CertificateTypes>Business</models:CertificateTypes>
+      </x:Array>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

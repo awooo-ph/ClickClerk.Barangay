@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 
 namespace ClickClerk.Barangay.Dialogs
@@ -19,7 +7,7 @@ namespace ClickClerk.Barangay.Dialogs
     /// <summary>
     /// Interaction logic for MessageDialog.xaml
     /// </summary>
-    public partial class MessageDialog : UserControl
+    public partial class MessageDialog
     {
         public MessageDialog()
         {
@@ -28,7 +16,7 @@ namespace ClickClerk.Barangay.Dialogs
 
         public async Task<bool> Show()
         {
-            var res = await DialogHost.Show(this, "InternalDialog");
+            var res = await DialogHost.Show(this, "InternalDialog").ConfigureAwait(false);
             if (res == null) return false;
             return res is bool b && b;
         }
@@ -54,7 +42,7 @@ namespace ClickClerk.Barangay.Dialogs
                 dlg.Negative.Visibility = Visibility.Collapsed;
             }
 
-            return await dlg.Show();
+            return await dlg.Show().ConfigureAwait(false);
         }
     }
 }
