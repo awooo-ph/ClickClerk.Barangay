@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using ClickClerk.Barangay.Dialogs;
 using ClickClerk.Barangay.Models;
@@ -22,8 +23,31 @@ namespace ClickClerk.Barangay.ViewModels.Pages
         private static Households _instance;
         public static Households Instance => _instance ?? (_instance = new Households());
 
-        private ObservableCollection<Models.Household> _items;
-        public ObservableCollection<Models.Household> Items => _items ?? (_items = Models.Household.GetAll());
+        private ObservableCollection<Models.Household> _items = Models.Household.GetAll();
+        private ListCollectionView _itemsView;
+        public ListCollectionView Items
+        {
+            get
+            {
+                if (_itemsView != null) return _itemsView;
+                _itemsView = new ListCollectionView(_items);
+                _itemsView.Filter = Filter;
+                return _itemsView;
+            }
+        }
+
+        private bool Filter(object obj)
+        {
+            if (!(obj is Household h)) return false;
+            if (string.IsNullOrEmpty(SearchKeyword)) return true;
+            if (h.Incharge?.Fullname?.ToLower()?.Contains(SearchKeyword.ToLower())??false) return true;
+            return false;
+        }
+
+        protected override void OnSearch()
+        {
+            _itemsView?.Refresh();
+        }
 
         private ICommand _addCommand;
         public ICommand AddCommand => _addCommand ?? (_addCommand = new DelegateCommand(async d =>
@@ -33,7 +57,7 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             if (res == null) return;
             if (res.Data.Save() > 0)
             {
-                Items.Add(res.Data);
+                _items.Add(res.Data);
             }
         }));
 
