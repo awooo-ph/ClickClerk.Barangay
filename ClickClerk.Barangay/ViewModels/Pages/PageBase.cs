@@ -39,6 +39,7 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             }
         }
 
+        protected virtual void OnSearch() { }
 
         private string _SearchKeyword;
 
@@ -50,6 +51,7 @@ namespace ClickClerk.Barangay.ViewModels.Pages
                 if (value == _SearchKeyword) return;
                 _SearchKeyword = value;
                 OnPropertyChanged(nameof(SearchKeyword));
+                OnSearch();
             }
         }
 
