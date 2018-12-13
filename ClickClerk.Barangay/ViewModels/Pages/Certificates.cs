@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using ClickClerk.Barangay.Dialogs;
 using ClickClerk.Barangay.Models;
@@ -26,8 +27,31 @@ namespace ClickClerk.Barangay.ViewModels.Pages
         private static Certificates _instance;
         public static Certificates Instance => _instance ?? (_instance = new Certificates());
 
-        private ObservableCollection<Certificate> _items;
-        public ObservableCollection<Certificate> Items => _items ?? (_items = Certificate.GetAll());
+        private ObservableCollection<Certificate> _items = Certificate.GetAll();
+        private ListCollectionView _itemsView;
+        public ListCollectionView Items
+        {
+            get
+            {
+                if (_itemsView != null) return _itemsView;
+                _itemsView = new ListCollectionView(_items);
+                _itemsView.Filter = Filter;
+                return _itemsView;
+            }
+        }
+
+        private bool Filter(object obj)
+        {
+            if (!(obj is Certificate h)) return false;
+            if (string.IsNullOrEmpty(SearchKeyword)) return true;
+            if (h.Tawo?.Fullname?.ToLower()?.Contains(SearchKeyword.ToLower()) ?? false) return true;
+            return false;
+        }
+
+        protected override void OnSearch()
+        {
+            _itemsView?.Refresh();
+        }
 
         private ICommand _addCommand;
         public ICommand AddCommand => _addCommand ?? (_addCommand = new DelegateCommand(async d =>
@@ -40,17 +64,17 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             if (res == null) return;
             res.Data.TawoId = tawo.Save();
             res.Data.Save();
-            Items.Add(res.Data);
+            _items.Add(res.Data);
             var path = GenerateCertificate(res.Data);
             if(res.PrintCertificate)
                 Process.Start("winword.exe", $"\"{path}\"");
         }));
 
         private ICommand _deleteCommand;
-        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new DelegateCommand<CaseFile>(async d =>
+        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new DelegateCommand<Certificate>(async d =>
         {
             if (await MessageDialog.Show("Are you sure you want to delete this certification?",
-                $"Certification number {d.CaseNumber} will be removed from the database. Click DELETE to confirm action.",
+                $"Certification number {d.ControlNumber} will be removed from the database. Click DELETE to confirm action.",
                 "DELETE", "CANCEL", PackIconKind.DeleteForever))
             {
                 d.Delete();
