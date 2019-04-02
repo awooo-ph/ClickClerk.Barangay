@@ -1,2 +1,2 @@
 # ClickClerk.Barangay
-A clerk in a click
+![screenshot](https://github.com/awooo-ph/ClickClerk.Barangay/blob/master/Capture.PNG)
