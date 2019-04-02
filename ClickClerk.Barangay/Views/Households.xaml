@@ -46,6 +46,20 @@
                     <WrapPanel Orientation="Horizontal"/>
                   </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Grid>
+                      <TextBlock Text="{Binding}"/>
+                      <Button Style="{StaticResource MaterialDesignFlatButton}"
+                              Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=IsMouseOver,Converter={x:Static cnv:BooleanToVisibility.Instance}}"
+                              HorizontalAlignment="Right"
+                              ToolTip="Remove Member"
+                              Command="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},Path=DataContext.RemoveMemberCommand}"
+                              CommandParameter="{Binding}"
+                              Content="{md:PackIcon Close}"/>
+                    </Grid>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
               </ListBox>
               <Button Content="Add Member" Margin="10 0 0 0"
                       Style="{StaticResource MaterialDesignRaisedLightButton}"

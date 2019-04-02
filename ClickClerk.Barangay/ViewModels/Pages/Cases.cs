@@ -25,7 +25,7 @@ namespace ClickClerk.Barangay.ViewModels.Pages
         public static Cases Instance => _instance ?? (_instance = new Cases());
 
         private ObservableCollection<Models.CaseFile> _items;
-        public ObservableCollection<Models.CaseFile> Items => _items ?? (_items = Models.CaseFile.GetAll());
+        public ObservableCollection<Models.CaseFile> Items => _items ?? (_items = new ObservableCollection<CaseFile>(Models.CaseFile.GetAll().Take(74)));
 
         private ICommand _addCommand;
         public ICommand AddCommand => _addCommand ?? (_addCommand = new DelegateCommand(async d =>
@@ -68,6 +68,6 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             {
                 d.Delete();
             }
-        }));
+        }, d => MainViewModel.Instance.CurrentUser?.IsAdmin ?? false));
     }
 }

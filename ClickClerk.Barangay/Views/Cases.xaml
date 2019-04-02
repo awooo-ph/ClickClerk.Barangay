@@ -43,25 +43,28 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
         <DataGridTextColumn Binding="{Binding CaseNumber,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
-                            Header="FILE CASE NO."
+                            Header="CASE NUMBER"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
         <DataGridTextColumn Binding="{Binding Case,UpdateSourceTrigger=PropertyChanged}" 
-                            Header="DESCRIPTION"
+                            Header="TITLE"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-        <DataGridTemplateColumn Header="DATE FILED">
+        <DataGridTextColumn Binding="{Binding DateFiled,StringFormat=d,UpdateSourceTrigger=PropertyChanged}" 
+                            Header="DATE FILED"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+        <!--<DataGridTemplateColumn Header="DATE FILED">
           <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding DateFiled,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged,StringFormat=d}"
+            <DataTemplate DataType="{x:Type models:CaseFile}">
+              <TextBlock Text="{Binding StringFormat=d,Mode=OneWay,Path=DateFiled}"
                          VerticalAlignment="Center"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
           <DataGridTemplateColumn.CellEditingTemplate>
-            <DataTemplate>
-              <DatePicker SelectedDate="{Binding DateFiled,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+            <DataTemplate DataType="{x:Type models:CaseFile}">
+              <DatePicker SelectedDate="{Binding Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged,Path=DateFiled}"
                           DisplayDateEnd="{Binding Source={x:Static system:DateTime.Now}}"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellEditingTemplate>
-        </DataGridTemplateColumn>
+        </DataGridTemplateColumn>-->
         <DataGridTextColumn Binding="{Binding ComplainantsText,Mode=OneWay}"
                             IsReadOnly="True"
                             Header="COMPLAINANT"

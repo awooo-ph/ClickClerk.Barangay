@@ -9,7 +9,7 @@ namespace ClickClerk.Barangay.Converters
 {
     class BooleanToVisibility:ConverterBase
     {
-        private BooleanToVisibility(){}
+        public BooleanToVisibility(){}
 
         private static BooleanToVisibility _instance;
         public static BooleanToVisibility Instance => _instance ?? (_instance = new BooleanToVisibility());

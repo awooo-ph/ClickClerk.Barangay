@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClickClerk.Barangay.ViewModels;
 
 namespace ClickClerk.Barangay
 {
@@ -31,6 +32,18 @@ namespace ClickClerk.Barangay
         {
             SearchBox.Focus();
             SearchBox.SelectAll();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            if(_dialogHostLoaded) MainViewModel.Instance.Login();
+        }
+
+        private bool _dialogHostLoaded = false;
+        private void ExternalDialogHostLoaded(object sender, RoutedEventArgs e)
+        {
+            _dialogHostLoaded = true;
         }
     }
 }

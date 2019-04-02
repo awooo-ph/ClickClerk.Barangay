@@ -18,12 +18,16 @@ namespace ClickClerk.Barangay.ViewModels.Pages
         private Households()
         {
             CanSearch = true;
+            //Messenger.Default.AddListener<HouseholdMember>(Messages.HouseHoldMemberDeleted, m =>
+           // {
+               
+            //});
         }
 
         private static Households _instance;
         public static Households Instance => _instance ?? (_instance = new Households());
 
-        private ObservableCollection<Models.Household> _items = Models.Household.GetAll();
+        private readonly ObservableCollection<Models.Household> _items = Models.Household.GetAll();
         private ListCollectionView _itemsView;
         public ListCollectionView Items
         {
@@ -70,7 +74,16 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             {
                 d.Delete();
             }
-        }));
+        }, d => MainViewModel.Instance.CurrentUser?.IsAdmin ?? false));
+
+        private ICommand _removeMemberCommand;
+        public ICommand RemoveMemberCommand => _removeMemberCommand ?? (_removeMemberCommand = new DelegateCommand<HouseholdMember>(
+            d=>
+            {
+                d.Delete();
+                _items.FirstOrDefault(x => x.Id == d.HouseholdId)?.Members.Remove(d);
+                d.Tawo?.Update(nameof(Tawo.HasHousehold), false);
+            }));
 
         private ICommand _addMemberCommand;
 
@@ -85,19 +98,21 @@ namespace ClickClerk.Barangay.ViewModels.Pages
 
             if (dlg == null) return;
             var tawo = dlg.UseSearch ? (Tawo) dlg.People.CurrentItem : dlg.NewTawo;
-            tawo.HasHousehold = true;
-            tawo.Save();
+            //tawo.HasHousehold = true;
+            //tawo.Save();
             if (tawo.Id > 0)
             {
-                var member = new HouseholdMember()
+                var member = HouseholdMember.GetByTawoId(tawo.Id) ?? new HouseholdMember()
                 {
                     TawoId = tawo.Id,
                     HouseholdId = d.Id,
                     Position = dlg.Position
                 };
+                member.IsDeleted = false;
                 member.Save();
                 d.Members.Add(member);
             }
         }));
+
     }
 }

@@ -73,6 +73,16 @@ namespace ClickClerk.Barangay.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Indigency {
+            get {
+                object obj = ResourceManager.GetObject("Indigency", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] PWD {
             get {
                 object obj = ResourceManager.GetObject("PWD", resourceCulture);

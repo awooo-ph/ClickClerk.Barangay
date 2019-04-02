@@ -39,6 +39,7 @@ namespace ClickClerk.Barangay.ViewModels.Pages
         private bool FilterTawo(object obj)
         {
             if (!(obj is Tawo t)) return false;
+            if (t.Id > 147) return false;
             if (string.IsNullOrEmpty(SearchKeyword)) return true;
             if (t.Fullname.ToLower().Contains(SearchKeyword.ToLower())) return true;
 
@@ -97,6 +98,6 @@ namespace ClickClerk.Barangay.ViewModels.Pages
             {
                d.Delete();
             }
-        }));
+        }, d => MainViewModel.Instance.CurrentUser?.IsAdmin ?? false));
     }
 }

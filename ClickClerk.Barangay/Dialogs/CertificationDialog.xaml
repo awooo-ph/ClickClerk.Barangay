@@ -47,12 +47,25 @@
                 <RowDefinition Height="Auto"/>
               </Grid.RowDefinitions>
               <StackPanel Margin="20 0 20 40">
-                <ComboBox ItemsSource="{StaticResource CertificateTypes}"
-                          md:HintAssist.Hint="CERTIFICATION TYPE"
-                          md:HintAssist.IsFloating="True"
-                          md:TextFieldAssist.HasFilledTextField="True"
-                          md:TextFieldAssist.RippleOnFocusEnabled="True"
-                          SelectedItem="{Binding Data.CertificateType}"/>
+                <GroupBox Header="CERTIFICATES">
+                  <ListBox ItemsSource="{StaticResource CertificateTypes}"
+                         MaxHeight="333" SelectionMode="Multiple"
+                           x:Name="Certificates" x:FieldModifier="public"
+                          md:TextFieldAssist.RippleOnFocusEnabled="True">
+                    <ListBox.ItemTemplate>
+                      <DataTemplate>
+                        <Grid>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                          </Grid.ColumnDefinitions>
+                          <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem},Path=IsSelected}"/>
+                          <TextBlock Text="{Binding}" Grid.Column="1"/>
+                        </Grid>
+                      </DataTemplate>
+                    </ListBox.ItemTemplate>
+                  </ListBox>
+                </GroupBox>
                 <DatePicker md:HintAssist.Hint="DATE" md:HintAssist.IsFloating="True"
                             DisplayDateEnd="{Binding Source={x:Static system:DateTime.Now},Mode=OneWay}"
                             SelectedDate="{Binding Data.DateIssued,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"

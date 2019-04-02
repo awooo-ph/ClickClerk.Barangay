@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using ClickClerk.Barangay.Models;
+using ClickClerk.Barangay.Properties;
 
 namespace ClickClerk.Barangay
 {
@@ -18,6 +19,12 @@ namespace ClickClerk.Barangay
         {
             Core.IsRunning = true;
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Settings.Default.Save();
+            base.OnExit(e);
         }
     }
 }

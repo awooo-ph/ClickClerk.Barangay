@@ -116,7 +116,7 @@
         <models:CertificateTypes>SSS</models:CertificateTypes>
         <models:CertificateTypes>PWD</models:CertificateTypes>
         <models:CertificateTypes>Death</models:CertificateTypes>
-        <models:CertificateTypes>Business</models:CertificateTypes>
+        <models:CertificateTypes>Indigent</models:CertificateTypes>
       </x:Array>
     </ResourceDictionary>
   </Application.Resources>

@@ -20,8 +20,11 @@
         xmlns:viewModels="clr-namespace:ClickClerk.Barangay.ViewModels"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ClickClerk [Barangay]" MinHeight="444" MinWidth="777">
-  <md:DialogHost Identifier="ExternalDialog" PopupStyle="{StaticResource MaterialDesignDialogHostPopup}">
+        Icon="./Resources/logo 77.png"
+        SnapsToDevicePixels="True"
+        Title="ClickClerk - Barangay" MinHeight="444" MinWidth="777">
+  <md:DialogHost Identifier="ExternalDialog" PopupStyle="{StaticResource MaterialDesignDialogHostPopup}"
+                 Loaded="ExternalDialogHostLoaded">
   <md:DialogHost Identifier="InternalDialog" CloseOnClickAway="True">
     <md:DrawerHost RightDrawerContent="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=RightDrawer}"
                  IsRightDrawerOpen="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=IsDrawerOpen}"
@@ -33,6 +36,9 @@
           <DataTemplate DataType="{x:Type viewModels:Schools}">
             <views:Schools/>
           </DataTemplate>
+          <DataTemplate DataType="{x:Type viewModels:Settings}">
+            <views:Settings/>
+          </DataTemplate>
     </md:DrawerHost.Resources>
     <Grid Background="{DynamicResource PrimaryHueMidBrush}">
     <Grid.RowDefinitions>
@@ -41,38 +47,46 @@
     </Grid.RowDefinitions>
 
     <StackPanel Orientation="Horizontal" Margin="20">
-      <Image Source="/Resources/logo 77.png"
+      <Image Source="/Resources/guihulngan.png"
                    Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"
-                   Height="40" Width="40"/>
-      <TextBlock Text="ClickClerk" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" 
+                   Height="47" Width="47"/>
+            <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
+              <TextBlock Text="Poblacion, Guihulngan City, Negros Oriental"
+                         VerticalAlignment="Center"
+                         Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"        
+                         Style="{DynamicResource MaterialDesignHeadlineTextBlock}"
+                         />
+              <TextBlock Text="BARANGAY RESIDENCE DATA SYSTEM AND CERTIFICATE ISSUANCE" 
                  VerticalAlignment="Center"
-                 Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"/>
-      <TextBlock Text="  [BARANGAY POBLACION]"
-                 VerticalAlignment="Center"
-                 Opacity="0.7"
-                 Foreground="{StaticResource PrimaryHueMidForegroundBrush}"/>
-    </StackPanel>
+                         Opacity="0.7"
+                         Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                 />
+      
+            </StackPanel>
+          </StackPanel>
 
-    <!--SEARCH BOX-->
-    <Grid Margin="0 0 20 0"
-          HorizontalAlignment="Right"
+          <StackPanel Orientation="Horizontal"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Right">
+            <!--SEARCH BOX-->
+            <Grid Margin="0 0 40 0"
             Visibility="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=CurrentScreen.CanSearch,Converter={x:Static converters:BooleanToVisibility.Instance}}"
             VerticalAlignment="Center">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="Auto"/>
-      </Grid.ColumnDefinitions>
-      <Grid x:Name="SearchBoxBorder" Width="0" Grid.Column="1">
-        <!--<Rectangle RadiusX="77" RadiusY="77" Fill="{DynamicResource PrimaryHueLightBrush}"
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Grid x:Name="SearchBoxBorder" Width="0" Grid.Column="1">
+                <!--<Rectangle RadiusX="77" RadiusY="77" Fill="{DynamicResource PrimaryHueLightBrush}"
                    HorizontalAlignment="Left"
                    Opacity="0.7"
                    Width="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}"/>-->
-        <Rectangle Fill="{StaticResource MaterialDesignPaper}"
+                <Rectangle Fill="{StaticResource MaterialDesignPaper}"
                    RadiusX="22" RadiusY="22"
                    SnapsToDevicePixels="True"
                    Margin="-44 0 0 0"/>
-        <Border>
-          <TextBox md:TextFieldAssist.NewSpecHighlightingEnabled="True"
+                <Border>
+                  <TextBox md:TextFieldAssist.NewSpecHighlightingEnabled="True"
                    Foreground="{StaticResource PrimaryHueLightForegroundBrush}"
                    IsUndoEnabled="False"
                    Text="{Binding Source={x:Static viewModels:MainViewModel.Instance},Path=CurrentScreen.SearchKeyword,UpdateSourceTrigger=PropertyChanged}"
@@ -85,9 +99,9 @@
                    x:Name="SearchBox"
                    md:TextFieldAssist.UnderlineCornerRadius="0"
                    md:TextFieldAssist.HasFilledTextField="False"/>
-        </Border>
-      </Grid>
-      <ToggleButton Style="{StaticResource MaterialDesignActionLightToggleButton}"
+                </Border>
+              </Grid>
+              <ToggleButton Style="{StaticResource MaterialDesignActionLightToggleButton}"
                       x:Name="ToggleButton"
                       Height="44"
                     Width="44"
@@ -96,36 +110,65 @@
                       Content="{md:PackIcon Magnify}"
                       Grid.Column="0"
                       md:ToggleButtonAssist.OnContent="{md:PackIcon ChevronDoubleRight}">
-        <ToggleButton.Triggers>
-          <EventTrigger RoutedEvent="ToggleButton.Checked">
-            <EventTrigger.Actions>
-              <StopStoryboard BeginStoryboardName="HideSearch"/>
-              <BeginStoryboard Name="ShowSearch">
-                <Storyboard>
-                  <DoubleAnimation Storyboard.TargetName="SearchBoxBorder" Storyboard.TargetProperty="Width"
+                <ToggleButton.Triggers>
+                  <EventTrigger RoutedEvent="ToggleButton.Checked">
+                    <EventTrigger.Actions>
+                      <StopStoryboard BeginStoryboardName="HideSearch"/>
+                      <BeginStoryboard Name="ShowSearch">
+                        <Storyboard>
+                          <DoubleAnimation Storyboard.TargetName="SearchBoxBorder" Storyboard.TargetProperty="Width"
                                      Duration="0:0:0.1"
                                      To="147"/>
-                </Storyboard>
-              </BeginStoryboard>
-            </EventTrigger.Actions>
-          </EventTrigger>
-          <EventTrigger RoutedEvent="ToggleButton.Unchecked">
-            <EventTrigger.Actions>
-              <StopStoryboard BeginStoryboardName="ShowSearch"/>
-              <BeginStoryboard Name="HideSearch">
-                <Storyboard>
-                  <DoubleAnimation Storyboard.TargetName="SearchBoxBorder" Storyboard.TargetProperty="Width"
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger.Actions>
+                  </EventTrigger>
+                  <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                    <EventTrigger.Actions>
+                      <StopStoryboard BeginStoryboardName="ShowSearch"/>
+                      <BeginStoryboard Name="HideSearch">
+                        <Storyboard>
+                          <DoubleAnimation Storyboard.TargetName="SearchBoxBorder" Storyboard.TargetProperty="Width"
                                      Duration="0:0:0.1"
                                      To="0"/>
-                </Storyboard>
-              </BeginStoryboard>
-            </EventTrigger.Actions>
-          </EventTrigger>
-        </ToggleButton.Triggers>
-      </ToggleButton>
-    </Grid>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger.Actions>
+                  </EventTrigger>
+                </ToggleButton.Triggers>
+              </ToggleButton>
+            </Grid>
 
-    <Grid Grid.Row="1">
+            <md:ColorZone Mode="PrimaryDark" Background="Transparent"
+                          Height="Auto"
+                          VerticalAlignment="Stretch">
+              <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Stretch"
+                        DataContext="{Binding Source={x:Static viewModels:MainViewModel.Instance}}"
+                        Visibility="{Binding IsAuthenticated,Converter={converters:BooleanToVisibility}}"
+                        Margin="0 0 20 0">
+                <md:PackIcon Kind="AccountCircle" Height="24" Width="24" VerticalAlignment="Center"/>
+
+                <TextBlock Text="{Binding CurrentUser.Fullname}"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold" Margin="4 0 17 0"/>
+
+                <Button Content="Logout" Command="{Binding LogoutCommand}"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        VerticalAlignment="Center"/>
+                <!--<md:PopupBox Style="{StaticResource MaterialDesignPopupBox}"
+                             VerticalAlignment="Center">
+                  <md:PopupBox.PopupContent>
+                    <StackPanel>
+                      --><!--<Button Content="Logout" Command="{Binding ShowUserAccountCommand}"/>--><!--
+                      <Button Content="Logout" Command="{Binding LogoutCommand}"/>
+                    </StackPanel>
+                  </md:PopupBox.PopupContent>
+                </md:PopupBox>-->
+              </StackPanel>
+            </md:ColorZone>
+          </StackPanel>
+          <Grid Grid.Row="1">
       <Grid.Effect>
         <DropShadowEffect ShadowDepth="0" RenderingBias="Performance"
                           BlurRadius="14" Opacity="0.4"/>
@@ -206,6 +249,12 @@
               <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="School"/>
                 <TextBlock Text=" SCHOOLS"/>
+              </StackPanel>
+            </Button>
+            <Button Command="{Binding ShowSettingsCommand}">
+              <StackPanel Orientation="Horizontal">
+                <md:PackIcon Kind="Settings"/>
+                <TextBlock Text=" SETTINGS"/>
               </StackPanel>
             </Button>
                 </StackPanel>

@@ -162,7 +162,12 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellEditingTemplate>
         </DataGridTemplateColumn>
-      </DataGrid.Columns>
+
+        <DataGridTextColumn Binding="{Binding Remarks,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                            Header="REMARKS"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+</DataGrid.Columns>
     </DataGrid>
       <Rectangle Height="1" SnapsToDevicePixels="True" Fill="{StaticResource MaterialDesignDivider}"
                  Grid.Column="1" IsHitTestVisible="False"
